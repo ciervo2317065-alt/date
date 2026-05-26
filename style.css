@@ -1,0 +1,129 @@
+:root{
+  --bg: #fff6f8;
+  --card: #ffffff;
+  --soft-pink: #ffb7c5;
+  --muted: #a77a86;
+  --accent: #ff7b9c;
+  --shadow: 0 10px 25px rgba(203, 125, 145, 0.12);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+  color:#442935;
+  font-size:16px;
+}
+
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart{position:absolute;--size:20px;width:var(--size);height:var(--size);display:inline-flex;align-items:center;justify-content:center;font-size:calc(var(--size) * 0.85);color:var(--accent);opacity:.95;filter:drop-shadow(0 2px 6px rgba(255,92,124,.18));animation-name:fall;animation-timing-function:linear;animation-iteration-count:infinite;transform-origin:center center}
+
+/* falling animation: hearts slowly drift downward, rotate, and fade */
+@keyframes fall{0%{transform:translateY(-10vh) translateX(0) rotate(0deg) scale(1);opacity:0}10%{opacity:.95}50%{transform:translateY(50vh) translateX(var(--sway, 0px)) rotate(180deg) scale(1.05)}100%{transform:translateY(110vh) translateX(calc(var(--sway, 0px) * -1)) rotate(360deg) scale(1.15);opacity:0.6}}
+
+/* per-heart variations for a natural look; use CSS variables so pseudo-elements scale correctly.
+  animation-delay uses negative values so hearts appear already in motion on page load. */
+.heart:nth-child(1){left:3%;--size:18px;--duration:14s;--delay:-4s;--sway:14px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(2){left:12%;--size:24px;--duration:18s;--delay:-7s;--sway:-22px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(3){left:20%;--size:16px;--duration:16s;--delay:-5s;--sway:10px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(4){left:28%;--size:22px;--duration:20s;--delay:-9s;--sway:-16px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(5){left:36%;--size:14px;--duration:15s;--delay:-3s;--sway:8px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(6){left:44%;--size:20px;--duration:17s;--delay:-6s;--sway:-12px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(7){left:52%;--size:26px;--duration:19s;--delay:-8s;--sway:18px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(8){left:60%;--size:16px;--duration:13s;--delay:-2s;--sway:-9px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(9){left:68%;--size:20px;--duration:21s;--delay:-10s;--sway:14px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(10){left:74%;--size:18px;--duration:14s;--delay:-4s;--sway:-10px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(11){left:82%;--size:22px;--duration:18s;--delay:-6s;--sway:16px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(12){left:88%;--size:16px;--duration:15s;--delay:-5s;--sway:-8px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(13){left:48%;--size:12px;--duration:12s;--delay:-1s;--sway:6px;animation-duration:var(--duration);animation-delay:var(--delay)}
+.heart:nth-child(14){left:65%;--size:28px;--duration:22s;--delay:-11s;--sway:-20px;animation-duration:var(--duration);animation-delay:var(--delay)}
+
+/* slight horizontal sway using transform: translateX based on animation progress */
+.heart{animation-name:fall;}
+.heart::after, .heart::before{opacity:0.98}
+
+.card{
+  width:100%;max-width:560px;border-radius:20px;background:var(--card);box-shadow:var(--shadow);padding:36px;position:relative;
+  transition:transform .36s ease, box-shadow .36s ease;
+}
+.card:active{transform:scale(.997)}
+
+.screen{display:none;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.screen.active{display:flex;animation:fadeIn .36s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.gif-placeholder{width:220px;height:150px;border-radius:14px;object-fit:cover;background:linear-gradient(135deg,#ffeef2 0%, #fff 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.6);border:1px solid rgba(255,123,156,.08);position:relative;z-index:0}
+.title{margin:8px 0 0;font-size:24px;letter-spacing:.2px}
+.sub{color:var(--muted);font-size:15px;margin:0}
+.note{color:var(--muted);font-size:15px;margin-top:8px}
+
+.actions{display:flex;gap:14px;margin-top:14px}
+.btn{padding:12px 20px;border-radius:14px;border:none;cursor:pointer;font-weight:700;transition:transform .18s ease,box-shadow .18s ease;font-size:16px}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(180deg,var(--soft-pink),var(--accent));color:white;box-shadow:0 6px 18px rgba(255,123,156,.12)}
+.btn-ghost{background:transparent;border:1px solid rgba(68,41,53,.06);color:#5a3a40}
+
+/* Button hover/focus micro-interactions */
+.btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(255,123,156,.12)}
+.btn:focus{outline:none;box-shadow:0 8px 28px rgba(255,123,156,.12)}
+
+/* Make the No button fully opaque and visible over GIFs */
+#noBtn{
+  background: linear-gradient(180deg, #ff9fb3, #ff6c89);
+  border: 1px solid rgba(255,92,124,.95);
+  color: #fff;
+  z-index: 50;
+  min-width:72px;
+}
+#noBtn:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 40px rgba(255,92,124,.18)}
+#noBtn:active{transform:translateY(0)}
+#noBtn:focus{outline:none;box-shadow:0 10px 28px rgba(255,92,124,.18)}
+
+/* Start Over button: make it more visible and playful */
+#startOverBtn{
+  background: linear-gradient(180deg, #fff6f8, #ffeef2);
+  border: 1px solid rgba(255,123,156,.22);
+  color: #7a2733;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 28px rgba(255,123,156,.14);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .12s;
+}
+#startOverBtn:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 44px rgba(255,123,156,.18);opacity:1}
+#startOverBtn:active{transform:translateY(0) scale(.995)}
+#startOverBtn:focus{outline:none;box-shadow:0 12px 36px rgba(255,123,156,.18)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:6px}
+.food-card{background:linear-gradient(180deg,#fff,#fff6f9);border-radius:12px;padding:12px 14px;font-weight:600;border:1px solid rgba(255,123,156,.08);cursor:pointer;transition:transform .16s ease,box-shadow .16s ease;font-size:15px;display:flex;align-items:center;gap:12px;justify-content:flex-start}
+.food-card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(203,125,145,.08)}
+.food-card.selected{background:linear-gradient(180deg,var(--soft-pink),rgba(255,123,156,.18));color:black;box-shadow:0 12px 24px rgba(255,123,156,.12)}
+.food-icon{width:44px;height:44px;flex:0 0 44px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff4f6);display:inline-flex;align-items:center;justify-content:center;padding:6px}
+.food-label{font-size:15px}
+
+.form-row{display:flex;gap:10px;width:100%;justify-content:center;align-items:center}
+.input-date,.input-select{padding:10px;border-radius:10px;border:1px solid rgba(68,41,53,.06);background:white;min-width:0}
+.input-date{flex:1}
+.input-select{flex:1}
+
+.warning{color:#c94a6d;font-size:14px;margin:8px 0 0;min-height:18px}
+.final-msg{font-weight:700;color:#4b2b33;font-size:18px}
+
+@media (max-width:600px){
+  .card{padding:28px;border-radius:16px;max-width:480px}
+  .gif-placeholder{width:200px;height:130px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .title{font-size:20px}
+}
+
+@media (max-width:400px){
+  .card{padding:18px;border-radius:14px}
+  .gif-placeholder{width:160px;height:100px}
+  .title{font-size:18px}
+  .btn{font-size:15px;padding:10px 14px}
+}
